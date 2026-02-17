@@ -1,189 +1,139 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Zed Bangers</title>
+  <title>🎵 ZedBangers 🎵</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    .upload-box {
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 30px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-      border: none;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 6px;
-      background: #00ff88;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .song-card {
-      background: #1a1a1a;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    .song-card img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-
-    .song-title {
-      font-size: 22px;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    .song-user {
-      color: #00ff88;
-    }
-
-    audio {
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    .download-btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 15px;
-      background: #ff0055;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-    }
+    body { font-family: Arial; background:#111; color:white; padding:20px; }
+    h1 { text-align:center; }
+    .upload-box { background:#1e1e1e; padding:20px; border-radius:10px; margin-bottom:30px; }
+    input, textarea { width:100%; padding:10px; margin-top:10px; border-radius:6px; border:none; }
+    button { padding:10px 20px; margin-top:15px; border:none; border-radius:6px; background:#00ff88; font-weight:bold; cursor:pointer; }
+    .song-card { background:#1a1a1a; padding:20px; border-radius:10px; margin-bottom:20px; }
+    .song-card img { width:100%; height:300px; object-fit:cover; border-radius:10px; }
+    .song-title { font-size:22px; margin-top:10px; font-weight:bold; }
+    .song-user { color:#00ff88; }
+    audio { width:100%; margin-top:10px; }
+    .download-btn { display:inline-block; margin-top:10px; padding:8px 15px; background:#ff0055; color:white; text-decoration:none; border-radius:6px; }
   </style>
 </head>
-
 <body>
 
-<h1>Zed Bangers 🎵</h1>
+<h1>🎵 ZedBangers 🎵</h1>
 
 <div class="upload-box">
-  <h3>Upload New Song</h3>
-
+  <h3>Upload Your Song</h3>
   <input type="text" id="title" placeholder="Song Title">
   <input type="text" id="userName" placeholder="Your Name">
   <textarea id="description" placeholder="Song Description"></textarea>
-
-  <input type="text" id="songUrl" placeholder="Song URL (Upload to Firebase Storage first)">
-  <input type="text" id="imageUrl" placeholder="Cover Photo URL">
-
+  
+  <label>Cover Image:</label>
+  <input type="file" id="imageFile" accept="image/*">
+  
+  <label>Song File (MP3/Audio):</label>
+  <input type="file" id="songFile" accept="audio/*">
+  
   <button onclick="uploadSong()">Post Song</button>
 </div>
 
-<div id="songsContainer"></div>
+<div id="songsContainer">No songs yet. Be the first to post! 🎵</div>
 
-
-<!-- Firebase SDK -->
+<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js"></script>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
+// Firebase config
 const firebaseConfig = {
   databaseURL: "https://zedbangers-86dad-default-rtdb.firebaseio.com/"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const storage = getStorage(app);
 
-window.uploadSong = function() {
+window.uploadSong = async function() {
+  const title = document.getElementById("title").value.trim();
+  const userName = document.getElementById("userName").value.trim();
+  const description = document.getElementById("description").value.trim();
+  const imageFile = document.getElementById("imageFile").files[0];
+  const songFile = document.getElementById("songFile").files[0];
 
-  const title = document.getElementById("title").value;
-  const userName = document.getElementById("userName").value;
-  const description = document.getElementById("description").value;
-  const songUrl = document.getElementById("songUrl").value;
-  const imageUrl = document.getElementById("imageUrl").value;
-
-  if (!title || !userName || !songUrl || !imageUrl) {
-    alert("Please fill all required fields!");
+  if (!title || !userName || !songFile) {
+    alert("Please fill title, name, and select a song!");
     return;
   }
 
-  const songRef = push(ref(db, "songs"));
+  try {
+    // Upload cover image
+    let imageUrl = "";
+    if (imageFile) {
+      const imageRef = sRef(storage, `covers/${Date.now()}_${imageFile.name}`);
+      await uploadBytes(imageRef, imageFile);
+      imageUrl = await getDownloadURL(imageRef);
+    }
 
-  set(songRef, {
-    title: title,
-    userName: userName,
-    description: description,
-    songUrl: songUrl,
-    imageUrl: imageUrl,
-    timestamp: Date.now(),
-    likes: 0
-  });
+    // Upload song file
+    const songRef = sRef(storage, `songs/${Date.now()}_${songFile.name}`);
+    await uploadBytes(songRef, songFile);
+    const songUrl = await getDownloadURL(songRef);
 
-  alert("Song Uploaded Successfully!");
+    // Save to Realtime Database
+    const songDbRef = push(ref(db, "songs"));
+    await set(songDbRef, {
+      title,
+      userName,
+      description,
+      imageUrl,
+      songUrl,
+      timestamp: Date.now(),
+      likes: 0
+    });
 
-  document.getElementById("title").value = "";
-  document.getElementById("userName").value = "";
-  document.getElementById("description").value = "";
-  document.getElementById("songUrl").value = "";
-  document.getElementById("imageUrl").value = "";
+    alert("Song uploaded successfully!");
+
+    // Reset form
+    document.getElementById("title").value = "";
+    document.getElementById("userName").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("imageFile").value = "";
+    document.getElementById("songFile").value = "";
+
+  } catch (err) {
+    console.error(err);
+    alert("Error uploading song. Check console for details.");
+  }
 };
 
+// Display songs
 const songsContainer = document.getElementById("songsContainer");
 
 onValue(ref(db, "songs"), (snapshot) => {
-
   songsContainer.innerHTML = "";
-
   snapshot.forEach((childSnapshot) => {
-
     const song = childSnapshot.val();
-
     const songCard = document.createElement("div");
     songCard.classList.add("song-card");
 
     songCard.innerHTML = `
-      <img src="${song.imageUrl}" alt="Cover">
+      ${song.imageUrl ? `<img src="${song.imageUrl}" alt="Cover">` : ""}
       <div class="song-title">${song.title}</div>
       <div class="song-user">By ${song.userName}</div>
       <p>${song.description}</p>
-
       <audio controls>
         <source src="${song.songUrl}" type="audio/mpeg">
       </audio>
-
       <a href="${song.songUrl}" download class="download-btn">Download</a>
     `;
 
     songsContainer.prepend(songCard);
   });
 });
-
 </script>
-
 </body>
-    </html>
+  </html>
