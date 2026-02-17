@@ -5,24 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZedBangers - Share Your Music</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; }
         header {
             background: white;
             padding: 20px;
@@ -30,19 +20,16 @@
             margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
         h1 {
             color: #333;
             text-align: center;
             font-size: 2.5em;
         }
-
         h1 span {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .upload-form {
             background: white;
             padding: 30px;
@@ -50,47 +37,30 @@
             margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        .form-group { margin-bottom: 20px; }
         label {
             display: block;
             margin-bottom: 8px;
             color: #555;
             font-weight: 600;
         }
-
-        input[type="text"],
-        input[type="file"],
-        textarea {
+        input[type="text"], input[type="file"], textarea {
             width: 100%;
             padding: 12px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 16px;
-            transition: border-color 0.3s;
         }
-
-        input[type="text"]:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
         textarea {
             height: 100px;
             resize: vertical;
         }
-
         .file-input-wrapper {
             position: relative;
             overflow: hidden;
             display: inline-block;
             width: 100%;
         }
-
         .file-input-button {
             background: #f0f0f0;
             padding: 12px;
@@ -98,14 +68,7 @@
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
         }
-
-        .file-input-button:hover {
-            background: #e0e0e0;
-            border-color: #667eea;
-        }
-
         input[type="file"] {
             position: absolute;
             left: 0;
@@ -115,7 +78,6 @@
             width: 100%;
             height: 100%;
         }
-
         .btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -126,72 +88,47 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            transition: transform 0.3s;
         }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
+        .btn:hover { transform: translateY(-2px); }
         .songs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
             margin-top: 30px;
         }
-
         .song-card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
         }
-
-        .song-card:hover {
-            transform: translateY(-5px);
-        }
-
         .song-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-
-        .song-info {
-            padding: 20px;
-        }
-
+        .song-info { padding: 20px; }
         .song-title {
             font-size: 1.4em;
             color: #333;
             margin-bottom: 5px;
         }
-
         .song-artist {
             color: #667eea;
             font-weight: 600;
             margin-bottom: 10px;
         }
-
         .song-description {
             color: #666;
             margin-bottom: 15px;
-            line-height: 1.5;
         }
-
-        .audio-player {
-            width: 100%;
-            margin: 15px 0;
-        }
-
+        .audio-player { width: 100%; margin: 15px 0; }
         .song-actions {
             display: flex;
             gap: 10px;
             margin-bottom: 15px;
         }
-
         .download-btn {
             flex: 1;
             background: #28a745;
@@ -200,13 +137,7 @@
             padding: 10px;
             text-decoration: none;
             border-radius: 5px;
-            transition: background 0.3s;
         }
-
-        .download-btn:hover {
-            background: #218838;
-        }
-
         .like-btn {
             background: #dc3545;
             color: white;
@@ -215,60 +146,43 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.3s;
         }
-
-        .like-btn:hover {
-            background: #c82333;
-        }
-
         .comments-section {
             border-top: 1px solid #eee;
             padding-top: 15px;
         }
-
         .comments-list {
             max-height: 200px;
             overflow-y: auto;
             margin-bottom: 10px;
         }
-
         .comment {
             background: #f9f9f9;
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 10px;
         }
-
         .comment-author {
             font-weight: 600;
             color: #667eea;
             margin-bottom: 5px;
         }
-
-        .comment-text {
-            color: #666;
-            font-size: 0.9em;
-        }
-
+        .comment-text { color: #666; }
         .comment-time {
             color: #999;
             font-size: 0.8em;
             margin-top: 5px;
         }
-
         .comment-input-group {
             display: flex;
             gap: 10px;
         }
-
         .comment-input {
             flex: 1;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-
         .comment-submit {
             background: #667eea;
             color: white;
@@ -277,20 +191,25 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
         .loading {
             text-align: center;
             padding: 50px;
             color: white;
             font-size: 1.2em;
         }
-
         .no-songs {
             text-align: center;
             padding: 50px;
             color: white;
-            font-size: 1.2em;
             grid-column: 1 / -1;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
         }
     </style>
 </head>
@@ -301,41 +220,35 @@
             <p style="text-align: center; color: #666; margin-top: 10px;">Share your music with the world!</p>
         </header>
 
-        <div class="upload-form" id="uploadForm">
-            <h2 style="margin-bottom: 20px; color: #333;">Upload Your Banger</h2>
-            
+        <div class="upload-form">
+            <h2 style="margin-bottom: 20px;">Upload Your Banger</h2>
             <div class="form-group">
                 <label>Your Name:</label>
                 <input type="text" id="userName" placeholder="Enter your name" required>
             </div>
-
             <div class="form-group">
                 <label>Song Title:</label>
                 <input type="text" id="songTitle" placeholder="Enter song title" required>
             </div>
-
             <div class="form-group">
                 <label>Song Description:</label>
                 <textarea id="songDescription" placeholder="Tell us about your song..."></textarea>
             </div>
-
             <div class="form-group">
                 <label>Cover Image:</label>
                 <div class="file-input-wrapper">
-                    <div class="file-input-button" id="imageButton">Choose Cover Image</div>
+                    <div class="file-input-button" id="imageButton">📸 Choose Cover Image</div>
                     <input type="file" id="imageFile" accept="image/*" required>
                 </div>
             </div>
-
             <div class="form-group">
                 <label>Audio File:</label>
                 <div class="file-input-wrapper">
-                    <div class="file-input-button" id="audioButton">Choose Audio File</div>
+                    <div class="file-input-button" id="audioButton">🎵 Choose Audio File</div>
                     <input type="file" id="audioFile" accept="audio/*" required>
                 </div>
             </div>
-
-            <button class="btn" onclick="uploadSong()">Post Another Song</button>
+            <button class="btn" onclick="uploadSong()">Post Song</button>
         </div>
 
         <div id="songsContainer">
@@ -344,15 +257,20 @@
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
     <script>
-        // Firebase configuration
+        // REPLACE THESE WITH YOUR ACTUAL FIREBASE CONFIG VALUES
         const firebaseConfig = {
-            databaseURL: "https://zedbangers-86dad-default-rtdb.firebaseio.com/"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "zedbangers-86dad.firebaseapp.com",
+            databaseURL: "https://zedbangers-86dad-default-rtdb.firebaseio.com",
+            projectId: "zedbangers-86dad",
+            storageBucket: "zedbangers-86dad.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         // Initialize Firebase
@@ -360,25 +278,27 @@
         const database = firebase.database();
         const storage = firebase.storage();
 
-        // Load songs when page loads
-        window.addEventListener('load', loadSongs);
+        // Load songs on page load
+        window.addEventListener('load', function() {
+            loadSongs();
+        });
 
         // File input display
         document.getElementById('imageFile').addEventListener('change', function(e) {
             document.getElementById('imageButton').textContent = e.target.files[0] ? 
-                '📸 ' + e.target.files[0].name : 'Choose Cover Image';
+                '📸 ' + e.target.files[0].name : '📸 Choose Cover Image';
         });
 
         document.getElementById('audioFile').addEventListener('change', function(e) {
             document.getElementById('audioButton').textContent = e.target.files[0] ? 
-                '🎵 ' + e.target.files[0].name : 'Choose Audio File';
+                '🎵 ' + e.target.files[0].name : '🎵 Choose Audio File';
         });
 
-        // Upload song function
+        // Upload song
         async function uploadSong() {
-            const userName = document.getElementById('userName').value;
-            const songTitle = document.getElementById('songTitle').value;
-            const description = document.getElementById('songDescription').value;
+            const userName = document.getElementById('userName').value.trim();
+            const songTitle = document.getElementById('songTitle').value.trim();
+            const description = document.getElementById('songDescription').value.trim();
             const imageFile = document.getElementById('imageFile').files[0];
             const audioFile = document.getElementById('audioFile').files[0];
 
@@ -388,33 +308,30 @@
             }
 
             try {
-                // Show loading
                 const uploadBtn = document.querySelector('.btn');
                 uploadBtn.textContent = 'Uploading...';
                 uploadBtn.disabled = true;
 
-                // Upload image to Firebase Storage
+                // Upload image
                 const imageRef = storage.ref('images/' + Date.now() + '_' + imageFile.name);
                 await imageRef.put(imageFile);
                 const imageUrl = await imageRef.getDownloadURL();
 
-                // Upload audio to Firebase Storage
+                // Upload audio
                 const audioRef = storage.ref('audio/' + Date.now() + '_' + audioFile.name);
                 await audioRef.put(audioFile);
                 const audioUrl = await audioRef.getDownloadURL();
 
-                // Save song data to Realtime Database
-                const songData = {
+                // Save song data
+                await database.ref('songs').push({
                     userName: userName,
                     title: songTitle,
-                    description: description,
+                    description: description || 'No description',
                     imageUrl: imageUrl,
                     songUrl: audioUrl,
                     timestamp: Date.now(),
                     likes: 0
-                };
-
-                await database.ref('songs').push(songData);
+                });
 
                 // Clear form
                 document.getElementById('userName').value = '';
@@ -422,20 +339,18 @@
                 document.getElementById('songDescription').value = '';
                 document.getElementById('imageFile').value = '';
                 document.getElementById('audioFile').value = '';
-                document.getElementById('imageButton').textContent = 'Choose Cover Image';
-                document.getElementById('audioButton').textContent = 'Choose Audio File';
+                document.getElementById('imageButton').textContent = '📸 Choose Cover Image';
+                document.getElementById('audioButton').textContent = '🎵 Choose Audio File';
 
-                alert('Song uploaded successfully!');
-                
-                // Reload songs
+                alert('✅ Song uploaded successfully!');
                 loadSongs();
 
             } catch (error) {
-                console.error('Error uploading song:', error);
-                alert('Error uploading song. Please try again.');
+                console.error(error);
+                alert('❌ Error uploading song. Check Firebase config.');
             } finally {
                 const uploadBtn = document.querySelector('.btn');
-                uploadBtn.textContent = 'Post Another Song';
+                uploadBtn.textContent = 'Post Song';
                 uploadBtn.disabled = false;
             }
         }
@@ -449,65 +364,49 @@
                 document.getElementById('loading').style.display = 'none';
                 
                 if (!snapshot.exists()) {
-                    document.getElementById('songsGrid').innerHTML = 
-                        '<div class="no-songs">No songs yet. Be the first to upload! 🎵</div>';
+                    document.getElementById('songsGrid').innerHTML = '<div class="no-songs">No songs yet. Be the first to upload! 🎵</div>';
                     return;
                 }
 
                 const songs = [];
                 snapshot.forEach(childSnapshot => {
-                    songs.push({
-                        id: childSnapshot.key,
-                        ...childSnapshot.val()
-                    });
+                    songs.push({ id: childSnapshot.key, ...childSnapshot.val() });
                 });
 
-                // Sort by newest first
                 songs.sort((a, b) => b.timestamp - a.timestamp);
 
                 const songsGrid = document.getElementById('songsGrid');
-                songsGrid.innerHTML = '';
-
                 songs.forEach(song => {
-                    const songCard = createSongCard(song);
-                    songsGrid.appendChild(songCard);
+                    songsGrid.appendChild(createSongCard(song));
                 });
             });
         }
 
-        // Create song card element
+        // Create song card
         function createSongCard(song) {
             const card = document.createElement('div');
             card.className = 'song-card';
             card.id = `song-${song.id}`;
 
-            const date = new Date(song.timestamp).toLocaleDateString();
-
             card.innerHTML = `
-                <img src="${song.imageUrl}" alt="${song.title}" class="song-image">
+                <img src="${song.imageUrl}" alt="${song.title}" class="song-image" 
+                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23667eea\'/%3E%3Ctext x=\'50\' y=\'50\' font-size=\'14\' text-anchor=\'middle\' fill=\'white\' dy=\'.3em\'%3EMusic%3C/text%3E%3C/svg%3E'">
                 <div class="song-info">
                     <h3 class="song-title">${song.title}</h3>
                     <div class="song-artist">by ${song.userName}</div>
                     <p class="song-description">${song.description || 'No description'}</p>
-                    
                     <audio controls class="audio-player">
                         <source src="${song.songUrl}" type="audio/mpeg">
-                        Your browser does not support the audio element.
                     </audio>
-
                     <div class="song-actions">
                         <a href="${song.songUrl}" download class="download-btn">⬇️ Download</a>
-                        <button class="like-btn" onclick="likeSong('${song.id}', ${song.likes})">
+                        <button class="like-btn" onclick="likeSong('${song.id}', ${song.likes || 0})">
                             ❤️ ${song.likes || 0}
                         </button>
                     </div>
-
                     <div class="comments-section">
                         <h4 style="margin-bottom: 10px;">Comments</h4>
-                        <div class="comments-list" id="comments-${song.id}">
-                            <!-- Comments will be loaded here -->
-                        </div>
-                        
+                        <div class="comments-list" id="comments-${song.id}"></div>
                         <div class="comment-input-group">
                             <input type="text" class="comment-input" id="commentName-${song.id}" 
                                    placeholder="Your name" value="${song.userName}">
@@ -516,32 +415,26 @@
                             <button class="comment-submit" onclick="addComment('${song.id}')">Post</button>
                         </div>
                     </div>
-
                     <div style="color: #999; font-size: 0.8em; margin-top: 10px;">
-                        Posted on ${date}
+                        Posted on ${new Date(song.timestamp).toLocaleDateString()}
                     </div>
                 </div>
             `;
 
-            // Load comments for this song
             loadComments(song.id);
-
             return card;
         }
 
-        // Like song function
+        // Like song
         function likeSong(songId, currentLikes) {
-            const songRef = database.ref(`songs/${songId}`);
-            songRef.update({
+            database.ref(`songs/${songId}`).update({
                 likes: (currentLikes || 0) + 1
             });
-            
-            // Update button text
             const likeBtn = document.querySelector(`#song-${songId} .like-btn`);
-            likeBtn.textContent = `❤️ ${currentLikes + 1}`;
+            if (likeBtn) likeBtn.textContent = `❤️ ${currentLikes + 1}`;
         }
 
-        // Add comment function
+        // Add comment
         function addComment(songId) {
             const nameInput = document.getElementById(`commentName-${songId}`);
             const textInput = document.getElementById(`commentText-${songId}`);
@@ -551,49 +444,36 @@
                 return;
             }
 
-            const comment = {
+            database.ref(`songs/${songId}/comments`).push({
                 userName: nameInput.value,
                 text: textInput.value,
                 timestamp: Date.now()
-            };
-
-            database.ref(`songs/${songId}/comments`).push(comment);
+            });
             
             textInput.value = '';
-            
-            // Reload comments
-            loadComments(songId);
         }
 
-        // Load comments for a song
+        // Load comments
         function loadComments(songId) {
             database.ref(`songs/${songId}/comments`).orderByChild('timestamp').on('value', (snapshot) => {
                 const commentsList = document.getElementById(`comments-${songId}`);
                 if (!commentsList) return;
 
                 commentsList.innerHTML = '';
-
                 if (!snapshot.exists()) {
-                    commentsList.innerHTML = '<p style="color: #999;">No comments yet</p>';
+                    commentsList.innerHTML = '<p style="color: #999; padding: 10px;">No comments yet</p>';
                     return;
                 }
 
                 const comments = [];
-                snapshot.forEach(childSnapshot => {
-                    comments.push(childSnapshot.val());
-                });
-
-                // Show newest comments first
-                comments.reverse();
-
-                comments.forEach(comment => {
-                    const date = new Date(comment.timestamp).toLocaleString();
+                snapshot.forEach(childSnapshot => comments.push(childSnapshot.val()));
+                comments.reverse().forEach(comment => {
                     const commentDiv = document.createElement('div');
                     commentDiv.className = 'comment';
                     commentDiv.innerHTML = `
                         <div class="comment-author">${comment.userName}</div>
                         <div class="comment-text">${comment.text}</div>
-                        <div class="comment-time">${date}</div>
+                        <div class="comment-time">${new Date(comment.timestamp).toLocaleString()}</div>
                     `;
                     commentsList.appendChild(commentDiv);
                 });
@@ -601,4 +481,4 @@
         }
     </script>
 </body>
-  </html>
+                </html>
